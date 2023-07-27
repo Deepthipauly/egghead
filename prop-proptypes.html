@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script src="https://www.unpkg.com/react@16.12.0/umd/react.production.min.js"></script>
+    <script src="https://www.unpkg.com/react-dom@16.12.0/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/prop-types@15.6.1/prop-types.js"></script>
+    <script type="text/babel">
+
+        const rootElement = document.getElementById('root')
+
+        function SayHello({ firstName, lastName }) {
+            return (
+                <div>Hello {firstName} {lastName}!</div>
+            )
+        }
+        const PropTypes = {
+            string(props, propName, componentName) {
+                if (typeof props[propName] !== 'string') {
+                    return new Error(`hey the component ${componentName} needs the prop ${firstName} to be a string, but you passed a ${typeof props[propName]}`)
+                }
+            }
+        }
+
+        SayHello.prototype = {
+            firstName: PropTypes.string.isRequired,
+            lastName: PropTypes.string.isRequired,
+        }
+
+        const element = <SayHello firstName={false} />
+
+
+
+        ReactDOM.render(element, document.getElementById('root'))
+    </script>
+</body>
+
+</html>
+
+<!-- here in production proptypes doesnot applied so if we need we can use babel plugin or other toolkits -->
+<!-- here proptypes are used to specify the type of props that passed from the parent or child, the type should be specified
+or thre occur an error if the proprequired is a string and the typeof prop passed is not string error occur
+and the validation isrequired can be used -->
