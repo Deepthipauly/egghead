@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script src="https://www.unpkg.com/react@16.12.0/umd/react.production.min.js"></script>
+    <script src="https://www.unpkg.com/react-dom@16.12.0/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+
+        const rootElement = document.getElementById('root')
+        const state = { eventCount: 0, userName: '' }
+        function App() {
+            function handleClick() {
+                console.log("clicked");
+                setState({ eventCount: state.eventCount + 1 })
+            }
+            function handleChange(event){
+                console.log('event',event);
+                setState({userName: event.target.value})
+            }
+
+            return (
+                <div>
+                    <p>there are {state.eventCount} events</p>
+                    <p><button onClick={handleClick}>Click here</button></p>
+                    <p>You type: {state.userName}</p>
+                    <p>
+                        <input onChange={handleChange} />
+                    </p>
+
+                </div>
+            )
+        }
+
+        function setState(newState) {
+            Object.assign(state, newState)
+            renderApp()
+        }
+
+        function renderApp() {
+            ReactDOM.render(< App />, document.getElementById('root'))
+        }
+        renderApp()
+    </script>
+</body>
+
+</html>
