@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script src="https://www.unpkg.com/react@16.12.0/umd/react.production.min.js"></script>
+    <script src="https://www.unpkg.com/react-dom@16.12.0/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+
+        function useLocalStorageState(key, defaultValue = '') {
+            const [state, setState] = React.useState(
+                () => window.localStorage.getItem(key) || defaultValue,
+            )
+
+            React.useEffect(() => {
+                window.localStorage.setItem(key, state)
+            }, [state])
+
+            return[state,setState]
+
+        }
+        function Greeting() {
+          const [name,setName] = useLocalStorageState('name')
+            const handleChange = event => setName(event.target.value)
+            return (
+            <div>
+                <form>
+                    <label htmlFor='name'>Name: </label>
+                    <input id='name' value={name} onChange={handleChange} />
+                </form>
+                {name ? <strong>Hello {name}</strong> : 'please type your name'}
+            </div>
+        )
+        }
+        
+        const rootElement = document.getElementById('root')
+
+        ReactDOM.render(<Greeting />, document.getElementById('root'))
+    </script>
+</body>
+
+</html>
